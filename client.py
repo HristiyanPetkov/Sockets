@@ -1,28 +1,15 @@
 import socket
+import pickle
 
-reconnect= ''
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("34.77.60.185", 8080))
+    
+info = input("Enter 'time', 'weather' or 'airquality': ")
+s.send(pickle.dumps(info))
 
-while True:
+return_info = s.recv(1024)
+return_info = pickle.loads(pickle.loads(return_info))
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((socket.gethostname(), 6732))
-    
-    while True:
-    
-        info = input("What do you want information about: weather, time or airquality: ")
-        s.send(bytes(info, 'utf-8'))   
-        
-        return_info = s.recv(1024).decode('utf-8')
-        
-        print("Server:", return_info)
+s.close()
 
-        if return_info == 'N/A':
-            s.close()
-            break
-            
-    print("Disconnected from server!")
-    
-    reconnect = input("Do you want to reconnect(y/n): ")
-    
-    if reconnect == 'n':
-        break
+print(return_info)
