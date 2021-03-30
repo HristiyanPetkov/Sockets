@@ -2,7 +2,7 @@ import socket
 import pickle
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("34.77.60.185", 8080))
+s.connect(("", 8080))
     
 info = input("What do you want information about(weather, time or airquality): ")
 s.send(pickle.dumps(info))
